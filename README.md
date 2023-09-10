@@ -12,7 +12,7 @@ npm install checkmatejs
 ### Using cdn
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/checkmatejs/dist/Checkmate.min.js"></script>
+<script src="https://unpkg.com/checkmatejs@1.2.0/dist/CheckMate.min.js"></script>
 ```
 
 ### Usage npm
