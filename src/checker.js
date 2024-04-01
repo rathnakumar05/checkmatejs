@@ -111,7 +111,8 @@ const static_checkers = {
   },
 
   is_email: function (v) {
-    var pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    var pattern =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     return pattern.test(v);
   },
 
