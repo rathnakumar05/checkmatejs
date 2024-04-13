@@ -36,6 +36,24 @@ const non_static_checkers = {
       `Rule cu_check:${func} is not found or invalid for the field ${this.current_key}`
     );
   },
+
+  regex_pattern: function (v, pattern) {
+    if (
+      this.current_value !== null &&
+      this.current_value.hasOwnProperty("regex_patterns")
+    ) {
+      var regex_patterns = this.current_value["regex_patterns"];
+      if (
+        regex_patterns[pattern] !== undefined &&
+        regex_patterns[pattern] instanceof RegExp
+      ) {
+        return regex_patterns[pattern].test(v);
+      }
+    }
+    throw new Error(
+      `Rule regex_pattern:${pattern} is not found or invalid for the field ${this.current_key}`
+    );
+  },
 };
 
 const static_checkers = {

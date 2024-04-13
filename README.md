@@ -9,6 +9,7 @@ CheckMate is a data validation library that helps you validate and enforce rules
 ```bash
 npm install checkmatejs
 ```
+
 ### Using cdn
 
 ```html
@@ -19,15 +20,16 @@ npm install checkmatejs
 
 ```js
 // ES5
-let CheckMate = require('checkmatejs');
+let CheckMate = require("checkmatejs");
 ```
 
 ```js
 // ES6
-import CheckMate from 'checkmatejs';
+import CheckMate from "checkmatejs";
 ```
 
 ## Table of Contents
+
 - [Type Castings](#type-castings)
 - [Checkers Rules](#checkers-rules)
 - [Schema Examples](#schema-examples)
@@ -66,38 +68,40 @@ import CheckMate from 'checkmatejs';
 
 ```javascript
 var data = {
-    name: "john"
+  name: "john",
 };
 
 var schema = {
-    name: {
-        rules: ["string", "required", "alpha_num_free"],
-        label: "Name",
-        message: {
-            "required": "Name is required",
-            "alpha_num_free": "Name must not contain special characters"
-        },
-        props: {
-            selector: "name"
-        },
-        errorHandler: function(props) {
-            // Handle errors
-            // porps structure
-            // {
-            // messages: [ 'Name is required', .... ],  --> error messages in array
-            // key: 'name', --> field_name or object key
-            // data: { name: 'john' } --> data or input supplied 
-            // }
-        },
-        successHandler: function(props) {
-            // Handle non-errors
-            //props structure
-            // {
-            // key: 'name', --> field_name or object key
-            // data: { name: 'larry', phone: '+179834578' } --> data or input supplied 
-            // }
-        }
-    }
+  name: {
+    rules: ["string", "required", "alpha_num_free"],
+    label: "Name",
+    message: {
+      required: "Name is required",
+      alpha_num_free: "Name must not contain special characters",
+    },
+    props: {
+      selector: "name",
+    },
+    errorHandler: function (props) {
+      // Handle errors
+      // porps structure
+      // {
+      // messages: [ 'Name is required', .... ],  --> error messages in array
+      // key: 'name', --> field_name or object key
+      // data: { name: 'john' } --> data or input supplied
+      // ...props
+      // }
+    },
+    successHandler: function (props) {
+      // Handle non-errors
+      //props structure
+      // {
+      // key: 'name', --> field_name or object key
+      // data: { name: 'larry', phone: '+179834578' } --> data or input supplied
+      // ...props
+      // }
+    },
+  },
 };
 
 var checkmate = new CheckMate(schema, data);
@@ -107,47 +111,48 @@ console.log(error, messages);
 ```
 
 ### Schema Example with require_with
+
 ```javascript
 var data = {
-    name: "larry",
-    phone: "+179834578"
+  name: "larry",
+  phone: "+179834578",
 };
 
 var schema = {
-    name: {
-        rules: ["string", "required", "alpha_num_free"],
-        label: "Name",
-        message: {
-            "required": "Name is required",
-            "alpha_num_free": "Name must not contain special characters"
-        },
-        props: {
-            selector: "name"
-        },
-        errorHandler: function(props) {
-            // Handle errors
-            // porps structure
-            // {
-            // messages: [ 'Name is required', .... ],  --> error messages in array
-            // key: 'name', --> field_name or object key
-            // data: { name: 'larry', phone: '+179834578' } --> data or input supplied 
-            // }
-        },
-        successHandler: function(props){
-            // Handle non-errors
-            //props structure
-            // {
-            // key: 'name', --> field_name or object key
-            // data: { name: 'larry', phone: '+179834578' } --> data or input supplied 
-            // }
-        },
-        async: false,
-        require_with: {
-            phone: {
-                rules: ["string", "phone", "min:10", "max:16"]
-            }
-        }
-    }
+  name: {
+    rules: ["string", "required", "alpha_num_free"],
+    label: "Name",
+    message: {
+      required: "Name is required",
+      alpha_num_free: "Name must not contain special characters",
+    },
+    props: {
+      selector: "name",
+    },
+    errorHandler: function (props) {
+      // Handle errors
+      // porps structure
+      // {
+      // messages: [ 'Name is required', .... ],  --> error messages in array
+      // key: 'name', --> field_name or object key
+      // data: { name: 'larry', phone: '+179834578' } --> data or input supplied
+      // }
+    },
+    successHandler: function (props) {
+      // Handle non-errors
+      //props structure
+      // {
+      // key: 'name', --> field_name or object key
+      // data: { name: 'larry', phone: '+179834578' } --> data or input supplied
+      // }
+    },
+    async: false,
+    require_with: {
+      phone: {
+        rules: ["string", "phone", "min:10", "max:16"],
+      },
+    },
+  },
 };
 
 var checkmate = new CheckMate(schema, data);
@@ -155,29 +160,32 @@ var { error, messages } = checkmate.check();
 
 console.log(error, messages);
 ```
+
 ### Schema Example with Custom Checkers
+
 ```javascript
 var data = {
-    "role" : "dev"
+  role: "dev",
 };
 
 var schema = {
-    role: {
-        rules: ["string", "cu_check:enum"],
-        cu_check: {
-            enum: function(props) {
-                // Custom checker logic
-                // props structure
-                // {
-                //   current_value: 'dev', --> current value to check
-                //   data: { role: 'dev' } --> data or input supplied
-                // }
-            }
-        },
-        messages: {
-            "cu_check:enum": "Value must be 'dev' or 'admin' only"
-        }
-    }
+  role: {
+    rules: ["string", "cu_check:enum"],
+    cu_check: {
+      enum: function (props) {
+        // Custom checker logic
+        // props structure
+        // {
+        //   current_value: 'dev', --> current value to check
+        //   data: { role: 'dev' } --> data or input supplied
+        // }
+        // return true or false --> based on the validation true or false should be returned
+      },
+    },
+    messages: {
+      "cu_check:enum": "Value must be 'dev' or 'admin' only",
+    },
+  },
 };
 
 var checkmate = new CheckMate(schema, data);
@@ -186,32 +194,47 @@ var { error, messages } = checkmate.check();
 console.log(error, messages);
 ```
 
-### Schema Example with regex BETA*
+### Schema Example with Regex Pattern
+
+```javascript
+var data = {
+  dob: "1999-08-20",
+};
+
+var schema = {
+  role: {
+    rules: ["string", "regex_pattern:dob_pattern"],
+    regex_patterns: {
+        dob_pattern: /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+    }
+    messages: {
+      "regex_pattern:name_pattern": "DOB must be a valid date format eg: yyyy-mm-dd",
+    },
+  },
+};
+
+var checkmate = new CheckMate(schema, data);
+var { error, messages } = checkmate.check();
+
+console.log(error, messages);
+```
+
+### Schema Example with regex BETA\*
+
 The regex checker is still in beta, but you can use it by providing a regex pattern as a string. This makes the checker a bit more challenging to use, so some compromises were made. For example, the `-` character needs to be passed at the end, like this: 'regex:/^[a-zA-Z0-9.!@%_:/,+''"\ -]$/'
 
 ```javascript
 var data = {
-    "role" : "dev"
+  role: "dev",
 };
 
 var schema = {
-    role: {
-        rules: ["string", "cu_check:enum", "regex:/^[a-zA-Z0-9.!@%_:/,*+'\"\\\\ -]*$/"],
-        cu_check: {
-            enum: function(props) {
-                // Custom checker logic
-                // props structure
-                // {
-                //   current_value: 'dev', --> current value to check
-                //   data: { role: 'dev' } --> data or input supplied
-                // }
-            }
-        },
-        messages: {
-            "cu_check:enum": "Value must be 'dev' or 'admin' only",
-            "regex": "Value is not a valid input"
-        }
-    }
+  role: {
+    rules: ["string", "regex:/^[a-zA-Z0-9.!@%_:/,*+'\"\\\\ -]*$/"],
+    messages: {
+      regex: "Value is not a valid input",
+    },
+  },
 };
 
 var checkmate = new CheckMate(schema, data);
@@ -219,4 +242,3 @@ var { error, messages } = checkmate.check();
 
 console.log(error, messages);
 ```
-
