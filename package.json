@@ -1,6 +1,6 @@
 {
   "name": "checkmatejs",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "checkmate will check your inputs mate",
   "main": "./src/index.js",
   "scripts": {

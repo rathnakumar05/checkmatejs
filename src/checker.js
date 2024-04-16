@@ -72,10 +72,10 @@ const static_checkers = {
 
     l = Number(l);
     if (v.length === undefined) {
-      return v > l;
+      return v >= l;
     }
 
-    return v.length > l;
+    return v.length >= l;
   },
 
   is_max: function (v, l = null) {
@@ -86,10 +86,10 @@ const static_checkers = {
 
     l = Number(l);
     if (v.length === undefined) {
-      return v < l;
+      return v <= l;
     }
 
-    return v.length < l;
+    return v.length <= l;
   },
 
   is_true: function (v) {
